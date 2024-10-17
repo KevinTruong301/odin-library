@@ -6,19 +6,19 @@ function Book(author, title, numPages){
     this.numPages = numPages;
 }
 
-function addBookToLibrary(book){
+function AddBookToLibrary(book){
     myLibrary.push(book);
 }
 
-addBookToLibrary(new Book("test", "test1", 1));
-addBookToLibrary(new Book("test2", "test2", 2));
-addBookToLibrary(new Book("test3", "test3", 3));
-addBookToLibrary(new Book("test4", "test4", 4));
-addBookToLibrary(new Book("test5", "test5", 5));
-addBookToLibrary(new Book("test6", "test16",6));
+AddBookToLibrary(new Book("test", "test1", 1));
+AddBookToLibrary(new Book("test2", "test2", 2));
+AddBookToLibrary(new Book("test3", "test3", 3));
+AddBookToLibrary(new Book("test4", "test4", 4));
+AddBookToLibrary(new Book("test5", "test5", 5));
+AddBookToLibrary(new Book("test6", "test16",6));
 
 let booksGridElement = document.querySelector("#books-grid")
-function createCard(author, title, numPages){
+function CreateCard(author, title, numPages){
     let cardElement = document.createElement('div');
     cardElement.className = "card";
 
@@ -44,4 +44,11 @@ function createCard(author, title, numPages){
 console.log(myLibrary);
 
 
-createCard("The lion", "forgot name", 77);
+
+function PopulateCardGrid(){
+    myLibrary.forEach(book => {
+        CreateCard(book.author, book.title, book.numPages);
+    });
+}
+
+PopulateCardGrid();
