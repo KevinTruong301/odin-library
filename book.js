@@ -52,3 +52,11 @@ function PopulateCardGrid(){
 }
 
 PopulateCardGrid();
+
+function CreateBook(){
+    console.log('test');
+}
+
+let newBookButton = document.querySelector('#new-book');
+newBookButton.addEventListener('click', CreateBook);
+
