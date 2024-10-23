@@ -53,10 +53,23 @@ function PopulateCardGrid(){
 
 PopulateCardGrid();
 
+let titleInput = document.querySelector("#title-input");
+let authorInput = document.querySelector("#author-input");
+let pagesInput = document.querySelector("#pages-input");
 function CreateBook(){
-    console.log('test');
+    AddBookToLibrary(new Book(titleInput.value, authorInput.value, pagesInput.value))
+    booksGridElement.textContent = "";
+    PopulateCardGrid();
+    
 }
 
-let newBookButton = document.querySelector('#new-book');
-newBookButton.addEventListener('click', CreateBook);
+let dialog = document.getElementById("dialog");
 
+let newBookButton = document.querySelector('#new-book');
+newBookButton.addEventListener('click', () => {
+    dialog.showModal();
+});
+
+let submitButton = document.querySelector('#submit-button');
+
+submitButton.addEventListener('click', CreateBook);
