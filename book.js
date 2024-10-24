@@ -1,6 +1,6 @@
 const myLibrary = [];
 
-function Book(author, title, numPages){
+function Book(title, author, numPages){
     this.author = author;
     this.title = title;
     this.numPages = numPages;
@@ -18,7 +18,7 @@ AddBookToLibrary(new Book("test5", "test5", 5));
 AddBookToLibrary(new Book("test6", "test16",6));
 
 let booksGridElement = document.querySelector("#books-grid")
-function CreateCard(author, title, numPages){
+function CreateCard(title, author, numPages){
     let cardElement = document.createElement('div');
     cardElement.className = "card";
 
@@ -47,16 +47,16 @@ console.log(myLibrary);
 
 function PopulateCardGrid(){
     myLibrary.forEach(book => {
-        CreateCard(book.author, book.title, book.numPages);
+        CreateCard(book.title, book.author, book.numPages);
     });
 }
 
 PopulateCardGrid();
 
 function CreateBook(){
-    console.log('test');
+    AddBookToLibrary(new Book("test", "test1", 1));
+    CreateCard("test", "test1", 1);
 }
 
 let newBookButton = document.querySelector('#new-book');
 newBookButton.addEventListener('click', CreateBook);
-
