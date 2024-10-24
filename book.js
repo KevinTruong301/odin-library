@@ -4,7 +4,12 @@ function Book(title, author, numPages){
     this.author = author;
     this.title = title;
     this.numPages = numPages;
+    this.read = false;
 }
+
+Book.prototype.markAsRead = function() {
+    this.read = true;
+};
 
 function AddBookToLibrary(book){
     myLibrary.push(book);
@@ -19,7 +24,7 @@ AddBookToLibrary(new Book("test6", "test16",6));
 
 
 let booksGridElement = document.querySelector("#books-grid")
-function CreateCard(index, author, title, numPages){
+function CreateCard(index, author, title, numPages, read){
     let cardElement = document.createElement('div');
     cardElement.className = "card";
 
@@ -42,10 +47,21 @@ function CreateCard(index, author, title, numPages){
     removeButton.cardElement = cardElement;
     removeButton.cardIndex = index;
     
+    let readButton = document.createElement('button');
+    readButton.className = 'read-button';
+    readButton.textContent = 'Mark As Read';
+    readButton.addEventListener('click', markAsRead);
+    readButton.cardIndex = index;
 
-    cardElement.appendChild(titleElement);
+    if(read)
+    {
+        readButton.textContent = "READ";
+    }
+
+    cardElement.appendChild(titleElement);  
     cardElement.appendChild(authorElement);
     cardElement.appendChild(numPagesElement);
+    cardElement.appendChild(readButton);
     cardElement.appendChild(removeButton);
 
     booksGridElement.appendChild(cardElement);
@@ -54,18 +70,24 @@ function CreateCard(index, author, title, numPages){
 
 function RemoveElement(evt)
 {
-    console.log(evt.currentTarget.index);
-    myLibrary.splice(evt, 1);
-    booksGridElement.removeChild(evt.currentTarget.cardElement);
-    console.log(myLibrary);
+    console.log(evt.currentTarget.cardIndex);
+    myLibrary.splice(evt.currentTarget.cardIndex, 1);
+    PopulateCardGrid();
 
+}
+
+function markAsRead(evt)
+{
+    myLibrary[evt.currentTarget.cardIndex].markAsRead();
+    PopulateCardGrid();
 }
 
 
 function PopulateCardGrid(){
+    booksGridElement.textContent = "";
     let index = 0;
     myLibrary.forEach(book => {
-        CreateCard(index, book.author, book.title, book.numPages);
+        CreateCard(index, book.author, book.title, book.numPages, book.read);
         index += 1;
     });
 }
@@ -85,7 +107,7 @@ let pagesInput = document.querySelector("#pages-input");
 let infoForm = document.querySelector("#info-form");
 function CreateBook(){
     AddBookToLibrary(new Book(titleInput.value, authorInput.value, pagesInput.value))
-    booksGridElement.textContent = "";
+
     PopulateCardGrid();
     infoForm.reset();
 }
